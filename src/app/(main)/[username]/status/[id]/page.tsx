@@ -22,7 +22,7 @@ export default async function PostDetailPage({
   const { data: rawPost } = await supabase
     .from('posts')
     .select(
-      'id, user_id, content, reply_to_id, created_at, profiles(id, username, display_name, avatar_url), likes(count)'
+      'id, user_id, content, reply_to_id, created_at, profiles!posts_user_id_fkey(id, username, display_name, avatar_url), likes(count)'
     )
     .eq('id', id)
     .single()
@@ -33,7 +33,7 @@ export default async function PostDetailPage({
   const { data: rawReplies } = await supabase
     .from('posts')
     .select(
-      'id, user_id, content, reply_to_id, created_at, profiles(id, username, display_name, avatar_url), likes(count)'
+      'id, user_id, content, reply_to_id, created_at, profiles!posts_user_id_fkey(id, username, display_name, avatar_url), likes(count)'
     )
     .eq('reply_to_id', id)
     .order('created_at', { ascending: true })

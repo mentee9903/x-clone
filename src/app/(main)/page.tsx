@@ -29,7 +29,7 @@ export default async function HomePage() {
   const { data: rawPosts } = await supabase
     .from('posts')
     .select(
-      'id, user_id, content, reply_to_id, created_at, profiles(id, username, display_name, avatar_url), likes(count)'
+      'id, user_id, content, reply_to_id, created_at, profiles!posts_user_id_fkey(id, username, display_name, avatar_url), likes(count)'
     )
     .is('reply_to_id', null)
     .in('user_id', userIds)
